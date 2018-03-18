@@ -1,0 +1,24 @@
+{
+  "name": "encrypted-notes",
+  "version": "0.0.1",
+  "description": "An encrypted notes app",
+  "main": "server.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.8.4",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbenett/CSE4471.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jbenett/CSE4471/issues"
+  },
+  "homepage": "https://github.com/jbenett/CSE4471#readme"
+}
