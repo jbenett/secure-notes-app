@@ -13,25 +13,6 @@ function register_routes(app) {
         res.send('Hello World!');
     });
 
-
-    /*
-    EXAMPLE SQLLITE + NODEJS CODE:
-
-    let sql = `SELECT DISTINCT Name name FROM playlists
-           ORDER BY name`;
-
-    db.all(sql, [], (err, rows) => {
-      if (err) {
-        throw err;
-      }
-      rows.forEach((row) => {
-        console.log(row.name);
-      });
-    });
-
-    */
-
-
     /*
     * This endpoint is called when our app wants to register a user.
     * Parameters needed in payload:
@@ -52,10 +33,13 @@ function register_routes(app) {
             // Create user by inserting new record into users table
             db.run(`INSERT INTO Users(email, password) VALUES(?, ?)`, [email, password], function(err) {
               if (err) {
-                return console.log(err.message);
+                res.status(500);
+                res.json({msg: "Error inserting data"});
               }
               // get the last insert id
-              console.log(`A row has been inserted with rowid ${this.lastID}`);
+
+              res.status(200);
+              res.json({msg: "User created!"});
             });
         }
     });
