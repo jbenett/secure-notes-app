@@ -1,0 +1,7 @@
+-- The following defines our SQL schemes and creates the tables:
+
+CREATE TABLE Users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL
+);
