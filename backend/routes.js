@@ -36,7 +36,6 @@ function register_routes(app) {
                 res.status(500);
                 res.json({msg: "Error inserting data"});
               }
-              // get the last insert id
 
               res.status(200);
               res.json({msg: "User created!"});
@@ -50,6 +49,8 @@ function register_routes(app) {
     * Parameters needed in payload:
     *       - email
     *       - password
+    *       - others?
+    *
     *
     */
     app.post('/login', (req, res) => {
