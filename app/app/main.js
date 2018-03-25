@@ -58,3 +58,15 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+var request = require('request');
+
+request.post(
+    'http://localhost:3000/register',
+    { json: { email: 'hello@mail.com', password: 'pass1234' } },
+    function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body)
+        }
+    }
+);
