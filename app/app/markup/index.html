@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="mystyles.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../styles/login.css" media="screen" />
     <style> ::-webkit-scrollbar { display: none; } </style>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -15,14 +15,12 @@
 					</span>
 
 					<div class="input-validator" data-validate = "Valid email is required: ex@abc.xyz">
+            <img src="../images/user.png" class="login-image"></img>
 						<input class="input" type="text" name="email" placeholder="Email">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
-						</span>
 					</div>
 
 					<div class="input-validator" data-validate = "Password is required">
+            <img src="../images/password.png" class="login-image"></img>
 						<input class="input" type="password" name="pass" placeholder="Password">
 					</div>
 
@@ -33,25 +31,25 @@
 					</div>
 
 					<div class="account-details">
-						<span>
-							Forgot
-						</span>
-						<a href="">
-							Username / Password?
+						<a href="register.html">
+							<button type="button" id="create-account-button">Create Account</button>
 						</a>
-					</div>
 
-					<div class="account-details">
-						<a href="">
-							Create your Account
-						</a>
+            <div class="account-details">
+  						<span>
+  							Forgot
+  						</span>
+  						<a href="">
+  							Username / Password?
+  						</a>
+  					</div>
 					</div>
 				</form>
 			</div>
 		</div>
     <script>
       // You can also require other files to run in this process
-      require('./renderer.js')
+      require('../renderer.js')
     </script>
   </body>
 </html>
