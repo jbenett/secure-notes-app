@@ -1,4 +1,7 @@
 let sqlite3 = require('sqlite3').verbose();
+var speakeasy = require('speakeasy');
+var QRCode = require('qrcode');
+
 let db = new sqlite3.Database('./database.db', (err) => {
   if (err) {
     return console.error(err.message);
@@ -54,7 +57,27 @@ function register_routes(app) {
     *
     */
     app.post('/login', (req, res) => {
+        let email = req.body.email;
+        let password = req.body.password;
 
+        console.log(req.body);
+        res.send('POST request to the homepage');
+
+        db.run(`SELECT count(1) FROM Users WHERE email = ? AND password = ?`, [email, password], function(err) {
+          if (err) {
+            res.status(500);
+            res.json({msg: "Email not found or password not correct"});
+          } else {
+            res.status(200);
+            var secret = speakeasy.generateSecret();
+            
+            QRCode.toDataURL(secret.otpauth_url, function(err, data_url) {
+              console.log(data_url);
+            });
+
+            res.json({msg: "User found!", qr: data_url});
+          }
+        });
     });
 }
 

@@ -18,5 +18,9 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "~1.8.2"
+  },
+  "dependencies": {
+    "qrcode": "^1.2.0",
+    "speakeasy": "^2.0.0"
   }
 }
