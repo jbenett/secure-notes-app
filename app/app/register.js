@@ -1,5 +1,3 @@
-require('./renderer.js');
-
 document.getElementById('email').oninput = function() {
 	
 }
