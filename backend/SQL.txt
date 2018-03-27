@@ -2,6 +2,6 @@
 
 CREATE TABLE Users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL
+    email VARCHAR(50) NOT NULL UNIQUE,
+    encrypted_email VARCHAR(250) NOT NULL
 );

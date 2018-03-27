@@ -25,25 +25,43 @@ function register_routes(app) {
     *
     */
     app.post('/register', (req, res) => {
-        // TODO: Validate these params, return error if not present
+        // Validate all params are set, return error if not present
         let email = req.body.email;
         let password = req.body.password;
 
-        // TODO: Check if email already exists. If it does, return error.
-        let emailExists = false;
+        if (email === undefined || password === undefined) {
+            res.status(400);
+            res.json({msg: "Bad request. Email and password must be set."});
+            return;
+        }
 
-        if (!emailExists) {
+
+        db.get(`SELECT COUNT(*) FROM Users WHERE email = ?`, [email], (result, err) => {
+            // Check if email already exists in DB
+            if (result !== null) {
+                res.status(400);
+                res.json({msg: "User already exists in database."});
+                return;
+            }
+
             // Create user by inserting new record into users table
-            db.run(`INSERT INTO Users(email, password) VALUES(?, ?)`, [email, password], function(err) {
+            let encrypted_email = email; // TODO: Actually encrpyt this
+            db.run(`INSERT INTO Users(email, encrypted_email) VALUES(?, ?)`, [email, encrypted_email], function(err) {
               if (err) {
+                console.log("Error inserting data", err);
                 res.status(500);
                 res.json({msg: "Error inserting data"});
+                return;
               }
 
+              // User successfully created.
               res.status(200);
               res.json({msg: "User created!"});
+              return;
             });
-        }
+
+
+        });
     });
 
 

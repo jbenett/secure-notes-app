@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../styles/register.css" media="screen" />
     <meta charset="UTF-8">
     <title>Register</title>
   </head>
@@ -21,13 +21,16 @@
         <input id="password" class="field" type="password" maxlength="45">
       </label>
       <div id='submit_container'>
-        <button id='submit-btn'>submit</button>   
+        <button id='submit-btn'>Submit</button>
       </div>
+      <a href="index.html">
+        <button type="button" id ="back-button">Back to Login</button>
+      </a>
     </div>
 
     <script>
       // You can also require other files to run in this process
-      require('./renderer.js')
+      require('../renderer.js')
     </script>
   </body>
 </html>
