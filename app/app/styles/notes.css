@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #723147;
+  background: #331C2E;
+}
+
+.container {
+	text-align: center;
+	background-color: #F9E4AD;
+	padding: 1em;
+	margin: 2em;
+	border-radius: 0.5em;
+	box-shadow: 0.2em 0.2em LemonChiffon;
+}
+
+.nav {
+	background-color: #F9E4AD;
+	box-shadow: 0.2em 0.2em LemonChiffon;
+	width: 100%;
+}
+
+.field {
+	width: 90%;
+	padding: 0.5em 0;
+	border-radius: 0.5em;
+	border-style: solid;
+	border-color: #713349;
+}
+
+#add-btn, #del-btn, #logout-btn {
+    background-color: #F9E4AD;
+    border: none;
+    color: #331C2E;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+}
+
+#add-btn, #del-btn {
+	font-weight: 900;
+	font-size: 3em;
+}
+
+#logout-btn {
+	font-weight: bold;
+	font-size: 1em;
+	padding-top: 2em;
+}
+
+#logout-btn {
+	float: right;
+}
+
+#subm6it-btn {
+	color: white;
+	margin: 1em 0 0 0;
+	padding: 1em 2em;
+	background-color: #713349;
+	border: none;
+	border-radius: 5em;
+}
+
+#submit-btn:hover {
+	box-shadow: 0 0.3em #E6B098;
+}
+
+#back-button {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin-bottom: 1em;
+  margin-left: 1em;
+	border: none;
+	border-radius: 5em;
+  background-color: #713349;
+  border: none;
+  color: white;
+  padding: 1.5em 1.5em;
+  cursor: pointer;
+
+}
+
+h1 {
+	text-align: center;
+}
+
+h4 {
+	padding: 1em 0 0 0;
+	margin: 0;
+}

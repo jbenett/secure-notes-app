@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" type="text/css" href="../syles/mystyles.css" media="screen" />
   <head>
+    <link rel="stylesheet" type="text/css" href="../styles/notes.css" media="screen" />
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Welcome to Your Notes</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-
+    <div class="nav">
+      <span id="del-btn-wrapper">
+        <button id="del-btn">-</button>
+      </span>
+      <span id="add-btn-wrapper">
+          <button id="add-btn">+</button>
+      </span>
+      <span id="logout-btn-wrapper">
+          <a href="index.html">
+            <button id="logout-btn">Logout</button>
+          </a>
+      </span>
+    </div>
+    <div class="container">
+      <h1>Notes</h1>
+    </div>
+    <script type="text/javascript" src="../notes.js"></script>
     <script>
       // You can also require other files to run in this process
-      require('../renderer.js')
+      require('../renderer.js');
     </script>
   </body>
 </html>
