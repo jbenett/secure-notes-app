@@ -26,6 +26,7 @@ function register_routes(app) {
         // Validate all params are set, return error if not present
         let email = req.body.email;
         let password = req.body.password;
+        console.log(req.body)
 
         if (email === undefined || password === undefined) {
             res.status(400);
