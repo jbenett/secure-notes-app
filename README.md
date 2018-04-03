@@ -3,15 +3,15 @@
 
 Our encrpyted notes app is a desktop application which encrypts a user's notes.
 
-# From root directory, run
+#### From root directory, run
 ```bash
 cd app/app
 ```
-# Install dependencies
+#### Install dependencies
 ```bash
 npm install
 ```
-# Run the app
+##### Run the app
 ```bash
 npm start
 ```

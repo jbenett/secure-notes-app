@@ -1,4 +1,9 @@
 let sqlite3 = require('sqlite3').verbose();
+var speakeasy = require('speakeasy');
+var QRCode = require('qrcode');
+
+/* temporary: find better solution (probably localStorage or maybe something better?) */
+var two_factor_temp_secret = 0;
 
 let db = new sqlite3.Database('./database.db', (err) => {
   if (err) {
@@ -74,7 +79,54 @@ function register_routes(app) {
     *
     */
     app.post('/login', (req, res) => {
-0
+        let email = req.body.email;
+        let password = req.body.password;
+
+        console.log(req.body);
+
+        db.run(`SELECT count(1) FROM Users WHERE email = ? AND password = ?`, [email, password], function(err) {
+          if (err) {
+            res.status(500);
+            res.json({msg: "Email not found or password not correct"});
+          } else {
+            res.status(200);
+            var secret = speakeasy.generateSecret();
+
+            two_factor_temp_secret = secret.base32;
+            
+            QRCode.toDataURL(secret.otpauth_url, function(err, data_url) {
+              console.log(data_url);
+            });
+
+            res.json({msg: "User found!", qr: data_url});
+          }
+        });
+    });
+
+    /*
+    * This endpoint is called for the 2FA process when the user
+    * wants to verify their passcode
+    * Parameters needed in payload:
+    *   -passcode
+    *   -??
+    *
+    */
+    app.post('/verify', (req, res) => {
+        let passcode = req.body.passcode;
+        let secret = two_factor_temp_secret;
+
+        console.log(req.body);
+
+        let verified = speakeasy.totp.verify({ secret: base32secret,
+                                       encoding: 'base32',
+                                       token: passcode });
+        if(verified) {
+            res.status(200);
+            res.json(msg: "verified!");
+        } else {
+            res.status(500);
+            res.json(msg: "incorrect passcode");
+        }
     });
 }
 
