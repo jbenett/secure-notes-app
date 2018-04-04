@@ -9,47 +9,101 @@
   <body>
     <div class="content">
 			<div class="login-wrapper">
-				<form id = "login-form">
 					<span class="login-title">
 						Notes Login
 					</span>
 
-					<div class="input-validator" data-validate = "Valid email is required: ex@abc.xyz">
-            <img src="../images/user.png" class="login-image"></img>
-						<input class="input" type="text" name="email" placeholder="Email">
-					</div>
 
-					<div class="input-validator" data-validate = "Password is required">
-            <img src="../images/password.png" class="login-image"></img>
-						<input class="input" type="password" name="pass" placeholder="Password">
-					</div>
+                    <div id="step1">
+                        <form id = "login-form">
+    					<div class="input-validator" data-validate = "Valid email is required: ex@abc.xyz">
+                <img src="../images/user.png" class="login-image"></img>
+    						<input class="input" id="email" type="text" name="email" placeholder="Email">
+    					</div>
 
-					<div class="button-wrapper">
-						<button id="login-button">
-							Login
-						</button>
-					</div>
+    					<div class="input-validator" data-validate = "Password is required">
+                <img src="../images/password.png" class="login-image"></img>
+    						<input class="input" id="password" type="password" name="pass" placeholder="Password">
+    					</div>
 
-					<div class="account-details">
-						<a href="register.html">
-							<button type="button" id="create-account-button">Create Account</button>
-						</a>
+    					<div class="button-wrapper">
+    						<button id="login-button">
+    							Login
+    						</button>
+    					</div>
 
-            <div class="account-details">
-  						<span>
-  							Forgot
-  						</span>
-  						<a href="">
-  							Username / Password?
-  						</a>
-  					</div>
-					</div>
-				</form>
+    					<div class="account-details">
+    						<a href="register.html">
+    							<button type="button" id="create-account-button">Create Account</button>
+    						</a>
+
+                <div class="account-details">
+      						<span>
+      							Forgot
+      						</span>
+      						<a href="" id="testid">
+      							Username / Password?
+      						</a>
+      					</div>
+    					</div>
+    				</form>
+                </div>
+
+
+                <div id="step2" style="display:none;">
+                    <img src="" id="qrcode-image" />
+                    <h3>Please scan the QR code above into your 2FA app and enter the token generated below</h3>
+                    <input class="input" id="token" type="text" name="token" placeholder="2FA token">
+                    <div class="button-wrapper">
+                        <button id="login-button2">
+                            Login
+                        </button>
+                    </div>
+                </div>
 			</div>
 		</div>
     <script>
       // You can also require other files to run in this process
       require('../renderer.js')
+    </script>
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="../login.js"></script>
+    <script>
+    var email;
+
+    $('#login-button').click(function(e) {
+        e.preventDefault();
+        // Todo: Verify these are set
+        email = $('#email').val();
+        var password = $('#password').val();
+
+        $.post("http://localhost:3000/login_step1", {email: email, password: password})
+        .done(function(data) {
+            console.log(data);
+            $('#step1').hide();
+            $('#step2').show();
+            $('.login-wrapper').css('height', '500px');
+            $('#qrcode-image').attr('src', data['qr']);
+        })
+        .fail(function() {
+            alert("Error logging in.");
+        });
+
+        console.log(email, password);
+    });
+
+    $('#login-button2').click(function(e) {
+        e.preventDefault();
+        var token = $('#token').val();
+        $.post("http://localhost:3000/login_step2", {email: email, token: token})
+        .done(function(data) {
+            alert("Successful login!");
+        })
+        .fail(function(e) {
+            alert("Invalid token.");
+        });
+
+    });
     </script>
   </body>
 </html>
