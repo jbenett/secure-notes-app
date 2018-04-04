@@ -35,8 +35,10 @@ string  fsl (string txt, string key);   // Feistel cipher
 
 // -- Main ------------------------------------------------------------------ //
 int main() {
-    string txt = "HAHAHAHAHAH1AHAHHAHAHAHAHAHAHAHHA";
-    string key = "Sl1mshdy";
+    string txt = "I haven't faced death. I've cheated death. "
+                 "I've tricked my way out of death and patted myself "
+                 "on the back for my ingenuity; I know nothing.";
+    string key = "J4m3sTK1rk!";
     string ctx = fsl(txt, key);
     cout << "ORG TXT: " << txt << endl;
     cout << "ENC TXT: " << ctx << endl;
