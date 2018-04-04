@@ -36,6 +36,15 @@ body {
 	box-shadow: 0 0.3em #E6B098;
 }
 
+
+.success {
+  background: green;
+  border-radius: 70%;
+  overflow: hidden;
+  width: 30%;
+  color: white;
+}
+
 #back-button {
   position: fixed;
   bottom: 0;

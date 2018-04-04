@@ -25,6 +25,9 @@
         <div id='submit_container'>
           <button id='submit-btn'>Submit</button>
         </div>
+        <div id='response-div'>
+          <p id="response"></p>
+        </div>
         <a href="index.html">
           <button type="button" id ="back-button">Back to Login</button>
         </a>
@@ -39,26 +42,18 @@
       var $ = jQuery = require('jquery'); // as node_modules
     </script>
     <script>
-      $("#submit-btn").click(function() {
-          var arr = { email: 'holderEmail@mail.com', password: 12345 };
-          $.ajax({
-              data: JSON.stringify(arr),
-              contentType: 'application/json; charset=utf-8',
-              dataType: 'json',
-              url: "http://localhost:3000/register",
-              type: "POST",
-              beforeSend: function(x) {
-                if (x && x.overrideMimeType) {
-                  x.overrideMimeType("application/j-son;charset=UTF-8");
-                }
-              },
-              success: function(data) {
-                if(data) {
-                  console.log(data[0].value)
-                }
-              }
-          });
+      $("#submit-btn").click(function(e) {
+          e.preventDefault();
+          var email = $('#email').val();
+          var password = $('#password').val();
+          $.post("http://localhost:3000/register", {email: email, password: password})
+          .done(function(data) {
+            $('#response-div').addClass("success");
+            $('#response').html("Account Created Successfully");
+          })
       });
     </script>
+    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script src="../login.js"></script>
   </body>
 </html>
