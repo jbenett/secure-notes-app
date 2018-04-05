@@ -58,6 +58,28 @@ input {
     cursor: pointer;
 }
 
+#login-button2 {
+  background-color: #713349;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  margin: 4px 2px 5px 2px;
+  cursor: pointer;
+}
+
+#back-button {
+  background-color: #713349;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  margin: 1px 2px 10px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+	box-shadow: 0 0.3em #E6B098;
+}
+
 #create-account-button {
   background-color: #713349;
   border: none;

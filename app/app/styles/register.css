@@ -32,7 +32,7 @@ body {
 	border-radius: 5em;
 }
 
-#submit-btn:hover {
+button:hover {
 	box-shadow: 0 0.3em #E6B098;
 }
 
