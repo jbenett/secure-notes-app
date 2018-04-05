@@ -1,0 +1,17 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+textarea {
+  background-color: lightyellow;
+  border-style: solid;
+  border-color: lightyellow;
+  border: 0px 4px 0px 4px;
+  padding: 1px 6px 1px 6px;
+
+}
+
+textarea:focus{
+  border-style: solid;
+  border-color: black;
+}
