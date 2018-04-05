@@ -6,3 +6,12 @@ CREATE TABLE Users(
     encrypted_email VARCHAR(250) NOT NULL,
     secret_key_2fa VARCHAR(250)
 );
+
+CREATE TABLE Notes (
+    id      INTEGER PRIMARY KEY AUTOINCREMENT
+                    NOT NULL
+                    UNIQUE,
+    user_id INTEGER REFERENCES Users (id) ON DELETE CASCADE
+                    NOT NULL,
+    content BLOB    NOT NULL
+);
