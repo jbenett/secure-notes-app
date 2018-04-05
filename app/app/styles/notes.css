@@ -20,6 +20,26 @@ body {
 	width: 100%;
 }
 
+span img {
+	height: 3em;
+	margin-left: 12em;
+}
+
+.note {
+	width: 12em;
+	height: 10em;
+	padding: 1em;
+	margin: 1.2em;
+	border-radius: 0.5em;
+	background-color: #F9E4AD;
+	opacity: 0.5;
+	display: inline-grid;
+}
+
+.note:hover {
+	opacity: 0.9;
+}
+
 .field {
 	width: 90%;
 	padding: 0.5em 0;
