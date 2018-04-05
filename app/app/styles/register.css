@@ -45,6 +45,14 @@ body {
   color: white;
 }
 
+.failure {
+  background: red;
+  border-radius: 70%;
+  overflow: hidden;
+  width: 30%;
+  color: white;
+}
+
 #back-button {
   position: fixed;
   bottom: 0;
