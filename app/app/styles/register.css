@@ -39,18 +39,25 @@ body {
 
 .success {
   background: green;
-  border-radius: 70%;
+}
+
+.results{
+  margin-top: 30px;
   overflow: hidden;
-  width: 30%;
+  width: 100%;
   color: white;
 }
 
 .failure {
   background: red;
-  border-radius: 70%;
-  overflow: hidden;
-  width: 30%;
-  color: white;
+}
+
+#restrictions{
+	font-size: 0.6em;
+	line-height: 1.5em;
+	background-color: #FFC;
+  width: 50%;
+  margin: 0 auto;
 }
 
 #back-button {

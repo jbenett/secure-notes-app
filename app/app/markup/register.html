@@ -22,6 +22,11 @@
           <h4>Password</h4>
           <input id="password" name="password" class="field" type="password" maxlength="45">
         </label>
+        <div id="restrictions">
+          <p>
+          Password Must Contain: At least 1 Letter, 1 Number, 1 Special Character, no Spaces, and be at least 8 characters long.
+          </p>
+        </div>
         <div id='submit_container'>
           <button id='submit-btn'>Submit</button>
         </div>
@@ -56,22 +61,34 @@
           var email = $('#email').val();
           var password = $('#password').val();
           if (email == "" || (password == "")) {
+            $('#response-div').removeClass();
+            $('#response-div').addClass("results");
             $('#response-div').addClass("failure");
             $('#response').html("Please fill out necessary fields");
           }
           else if (!testPassword(password)) {
+            $('#response-div').removeClass();
+            $('#response-div').addClass("results");
             $('#response-div').addClass("failure");
-            $('#response').html("Please meet all password requirements");
+            $('#response').html("Password does not meet character requirements.");
+          }
+          else if (password.length < 8){
+            $('#response-div').removeClass();
+            $('#response-div').addClass("results");
+            $('#response-div').addClass("failure");
+            $('#response').html("Password is not long enough.");
           }
           else {
             $.post("http://localhost:3000/register", {email: email, password: password})
             .done(function(data) {
                 $('#response-div').removeClass();
+                $('#response-div').addClass("results");
                 $('#response-div').addClass("success");
                 $('#response').html("Account Created Successfully");
             })
             .fail(function() {
                 $('#response-div').removeClass();
+                $('#response-div').addClass("results");
                 $('#response-div').addClass("failure");
                 $('#response').html("Account Already Exists");
             });
