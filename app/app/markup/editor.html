@@ -6,18 +6,27 @@
     <title>Edit Note</title>
   </head>
   <body>
-    <textarea placeholder="Enter New Note"></textarea>
-    <div class="button-wrapper">
-      <button id="save-button">
-        Save
-      </button>
+    <div class="nav">
+      <span class="back-btn-wrapper">
+        <a href="notes.html">
+          <button id="back-btn">&#8592;</button>
+        </a>
+      </span>
+      <span id="save-btn-wrapper">
+        <button id="save-btn">&#10003;</button>
+      </span>
+      <span>
+        <img src="../images/pencil.png"></img>
+        <!-- source of image: https://commons.wikimedia.org/wiki/File:Simpleicons_Business_pencil-on-a-notes-paper.svg -->
+      </span>
+      <span id="logout-btn-wrapper">
+          <a href="index.html">
+            <button id="logout-btn">Logout</button>
+          </a>
+      </span>
     </div>
-    <div class="button-wrapper">
-      <a href="notes.html">
-        <button id="back-button">
-          Back
-        </button>
-      </a>
+    <div class="textarea-wrapper">
+      <textarea placeholder="Enter New Note"></textarea>
     </div>
   </body>
 </html>

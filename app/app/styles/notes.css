@@ -72,7 +72,7 @@ span img {
 	float: right;
 }
 
-#subm6it-btn {
+#submit-btn {
 	color: white;
 	margin: 1em 0 0 0;
 	padding: 1em 2em;
@@ -108,4 +108,8 @@ h1 {
 h4 {
 	padding: 1em 0 0 0;
 	margin: 0;
+}
+
+a {
+  text-decoration: none;
 }
