@@ -4,7 +4,8 @@ CREATE TABLE Users(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email VARCHAR(50) NOT NULL UNIQUE,
     encrypted_email VARCHAR(250) NOT NULL,
-    secret_key_2fa VARCHAR(250)
+    secret_key_2fa VARCHAR(250),
+    temp_auth_token VARCHAR(250)
 );
 
 CREATE TABLE Notes (
