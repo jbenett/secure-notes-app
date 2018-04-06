@@ -32,17 +32,32 @@ body {
 	border-radius: 5em;
 }
 
-#submit-btn:hover {
+button:hover {
 	box-shadow: 0 0.3em #E6B098;
 }
 
 
 .success {
   background: green;
-  border-radius: 70%;
+}
+
+.results{
+  margin-top: 30px;
   overflow: hidden;
-  width: 30%;
+  width: 100%;
   color: white;
+}
+
+.failure {
+  background: red;
+}
+
+#restrictions{
+	font-size: 0.6em;
+	line-height: 1.5em;
+	background-color: #FFC;
+  width: 50%;
+  margin: 0 auto;
 }
 
 #back-button {
