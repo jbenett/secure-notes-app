@@ -36,6 +36,12 @@ span img {
 	display: inline-grid;
 }
 
+input {
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+
 .note:hover {
 	opacity: 0.9;
 }
