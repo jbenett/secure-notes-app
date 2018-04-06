@@ -172,6 +172,7 @@ function register_routes(app) {
             if (verified) {
                 res.status(200);
                 res.json({msg: "Second setp of auth successful. Proceeding to note page"});
+                // TODO: Generate and return a temp_auth_token that can be used to make subsequent requests to get notes
                 // Redirect user to their notes page!
                 return;
             } else {
@@ -182,6 +183,63 @@ function register_routes(app) {
 
         });
 
+
+    });
+
+    /*
+    * Retrieves (unencrypted) notes for user.
+    * Required parameters:
+    *     - email
+    *     - temp_auth_token
+    *
+    */
+    app.get('/notes', (req, res) => {
+        let email = req.query.email;
+        let temp_auth_token = req.query.temp_auth_token;
+
+        if (email === undefined || temp_auth_token === undefined) {
+            res.status(400);
+            res.json({msg: "Bad request. Email and temp_auth_token must be set."});
+            return;
+        }
+
+
+        // Verify temp_auth_token against email_id
+        db.all(`SELECT Notes.id, Notes.content FROM Notes, Users WHERE Notes.user_id = Users.id AND Users.email = ? and Users.temp_auth_token = ?`, [email, temp_auth_token], (err, result) => {
+            if (err || result === undefined) {
+              console.error(err);
+              res.status(500);
+              res.json({msg: "Invalid email or temp_auth_token."});
+              return;
+            }
+
+            /* Reformat response object so it is in the following format:
+            *
+            * result_array = [
+                {
+                    id: 1,
+                    note: "Note 1 content"
+                },
+                {
+                    id: 2,
+                    note: "Note 2 content"
+                },
+                ,...,
+            * ]
+            *
+            */
+            result_array = [];
+            for (row in result) {
+                result_array.push({
+                    id: result[row]["id"],
+                    content: result[row]["content"]
+                });
+            }
+
+            res.status(200);
+            res.json({data: result_array});
+            return;
+        });
 
     });
 }
