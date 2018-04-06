@@ -42,7 +42,25 @@ Write something about 2FA here....
 #### Encryption
 
 Write something about the encryption here....
-
+1- Compiling the verysecure module:
+    - Setup build environment:
+        * Debian: 
+            - ```sudo apt install build-essential npm nodejs```
+            - ```sudo npm install -g node-gyp```
+        * MacOS:
+            - :(
+        * Windows:
+            - :(((
+    - Install node-gyp:
+        * ```npm install -g node-gyp```
+    - Change directory:
+        * ```cd /path/to/CSE4471/encryption```
+    - Build module:
+        * ```node-gyp configure; node-gyp build```
+    - Relocate module:
+        * File is ```./build/Release/verysecure.node```
+2- Using the verysecure module:
+    - To-do
 #### Validation
 
 Write something about validation here....

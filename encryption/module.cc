@@ -11,12 +11,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <node.h>
-
-using std::cin;
-using std::cout;
-using std::string;
-using std::substr;
-using std::find;
+using namespace std;
 
 using v8::Exception;
 using v8::FunctionCallbackInfo;
@@ -117,11 +112,12 @@ string fsl (string txt, string key) {
     return ctxt;
 }
 // -- NodeJS ---------------------------------------------------------------- //
-void PassNumber(const FunctionCallbackInfo<Value>& args) {
+void bridge (const FunctionCallbackInfo<Value>& args) {
 	Isolate * isolate = args.GetIsolate();
-	string txt = args[0]->StringValue();
-	string key = args[1]->StringValue();
-	Local<String> ret = Number::New(isolate, fsl(txt, key));
+	string txt ((char*) *(args[0]->ToString()));
+	string key ((char*) *(args[0]->ToString()));
+	string res = fsl(txt, key);
+	Local<String> ret = v8::String::NewFromUtf8(isolate, res.c_str());
 	args.GetReturnValue().Set(ret);
 }
 void init(Local<Object> exports) {
