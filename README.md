@@ -42,21 +42,16 @@ Write something about 2FA here....
 #### Encryption
 
 1. Compiling the verysecure module
-    1. Setup build environment
-        + Debian:
-            1. ```sudo apt install build-essential npm nodejs```
-            2. ```sudo npm install -g node-gyp```
-        + MacOS:
-            1. :(
-        + Windows:
-            1. :(((
-    2. Install node-gyp:
+    + Setup build environment (Debian)
+        * ```sudo apt install build-essential npm nodejs```
+        * ```sudo npm install -g node-gyp```
+    + Install node-gyp:
         * ```npm install -g node-gyp```
-    3. Change directory:
+    + Change directory:
         * ```cd /path/to/CSE4471/encryption```
-    4. Build module:
+    + Build module:
         * ```node-gyp configure; node-gyp build```
-    5. Relocate module:
+    + Relocate module:
         * File is ```./build/Release/verysecure.node```
 2. Using the verysecure module:
     * To-do
