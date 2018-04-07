@@ -248,6 +248,40 @@ function register_routes(app) {
     *
     */
     app.post('/notes/new', (req, res) => {
+        let email = req.body.email;
+        let temp_auth_token = req.body.temp_auth_token;
+        let content = req.body.content;
+
+        if (email === undefined || temp_auth_token === undefined || content == undefined) {
+            res.status(400);
+            res.json({msg: "Bad request. Email and temp_auth_token must be set."});
+            return;
+        }
+
+        // Verify temp_auth_token against email_id using prepared SQL statement
+        db.all(`SELECT Notes.id, Notes.content FROM Notes, Users WHERE Notes.user_id = Users.id AND Users.email = ? and Users.temp_auth_token = ?`, [email, temp_auth_token], (err, result) => {
+            if (err || result === undefined) {
+              console.error(err);
+              res.status(500);
+              res.json({msg: "Invalid email or temp_auth_token."});
+              return;
+            }
+
+            db.run('INSERT INTO Notes (user_id, content) values((SELECT id from Users where email = ?), ?)', [email, content], (err) => {
+                if (err) {
+                    console.error("Could not insert note", err);
+                    res.status(500);
+                    res.json({msg: "Unable to create new note in DB. Please try again later."});
+                    return;
+                }
+
+                // Successfully inserted note into DB
+                console.log("Inserted new note into DB: ", email, content);
+                res.status(200);
+                res.json({msg: "Created note."});
+                return;
+            });
+        });
 
     });
 
@@ -305,25 +339,6 @@ function register_routes(app) {
             res.status(200);
             res.json({msg: "Deleted notes."});
             return;
-
-
-            /*db.run('DELETE FROM Notes WHERE user_id = (SELECT id from Users where email = ?) AND Notes.id in (?)', [email, "1,2"], (err) => {
-                if (err) {
-                    console.error(err);
-                    res.status(500);
-                    res.json({msg: "Unable to delete notes. Try again later."});
-                    return;
-                } else {
-                    // Successfully deleted notes.
-                    console.log("Deleted notes: ", email, delete_ids);
-                    res.status(200);
-                    res.json({msg: "Deleted notes."});
-                    return;
-                }
-
-
-            });*/
-
         });
 
 
