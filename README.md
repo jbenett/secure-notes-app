@@ -54,7 +54,18 @@ Write something about 2FA here....
     + Relocate module:
         * File is ```./build/Release/verysecure.node```
 2. Using the verysecure module:
-    * To-do
+```javascript
+const crypto = require('./verysecure');
+
+function encrypt(data, key){
+  var txt = Buffer.from(data,'ascii');
+  return crypto.cipher(txt, key).toString('hex');
+}
+function decrypt(data, key){
+  var ctxt = Buffer.from(data,'hex');
+  return crypto.cipher(ctxt, key).toString('ascii');
+}
+```
 
 #### Validation
 
