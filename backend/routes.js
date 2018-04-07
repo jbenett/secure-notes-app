@@ -242,6 +242,17 @@ function register_routes(app) {
         });
 
     });
+
+    /*
+    * Allows a user to post a new note to the database.
+    *
+    *
+    *
+    *
+    */
+    app.post('/notes', (req, res) => {
+
+    });
 }
 
 
