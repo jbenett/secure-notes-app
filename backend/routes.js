@@ -2,8 +2,7 @@ let sqlite3 = require('sqlite3').verbose();
 var speakeasy = require('speakeasy');
 var QRCode = require('qrcode');
 // Nodejs encryption with CTR
-const crypto = require('crypto'),
-    algorithm = 'aes-256-ctr';
+const crypto = require('./verysecure');
 
 /* temporary: find better solution (probably localStorage or maybe something better?) */
 var two_factor_temp_secret = 0;
@@ -15,19 +14,17 @@ let db = new sqlite3.Database('./database.db', (err) => {
   console.log('Connected to the in-memory SQlite database.');
 });
 
-// TODO: Rewrite these
+
 function encrypt(data, key){
-  var cipher = crypto.createCipher(algorithm, key);
-  var crypted = cipher.update(data,'utf8','hex');
-  crypted += cipher.final('hex');
-  return crypted;
+  console.log(data);
+  var txt = Buffer.from(data,'ascii');
+  return crypto.cipher(txt, key).toString('hex');
 }
 
 function decrypt(data, key){
-  var decipher = crypto.createDecipher(algorithm, key);
-  var dec = decipher.update(data,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
+  console.log(data);
+  var ctxt = Buffer.from(data,'hex');
+  return crypto.cipher(ctxt, key).toString('ascii');
 }
 
 
