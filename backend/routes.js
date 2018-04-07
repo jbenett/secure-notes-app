@@ -204,7 +204,7 @@ function register_routes(app) {
         }
 
 
-        // Verify temp_auth_token against email_id
+        // Verify temp_auth_token against email_id using prepared SQL statement
         db.all(`SELECT Notes.id, Notes.content FROM Notes, Users WHERE Notes.user_id = Users.id AND Users.email = ? and Users.temp_auth_token = ?`, [email, temp_auth_token], (err, result) => {
             if (err || result === undefined) {
               console.error(err);
@@ -242,6 +242,98 @@ function register_routes(app) {
         });
 
     });
+
+    /*
+    * Allows a user to post a new note to the database.
+    *
+    *
+    *
+    *
+    */
+    app.post('/notes/new', (req, res) => {
+
+    });
+
+    /*
+    * Allows a user to delete their own notes.
+    *
+    * Parameters needed:
+    *       - email
+    *       - temp_auth_token
+    *       - an array of note id's to delete
+    */
+    app.post('/notes/delete', (req, res) => {
+        let email = req.body.email;
+        let temp_auth_token = req.body.temp_auth_token;
+        let delete_ids = req.body.id_array;
+
+        if (email === undefined || temp_auth_token === undefined || delete_ids == undefined) {
+            res.status(400);
+            res.json({msg: "Bad request. Email and temp_auth_token must be set."});
+            return;
+        }
+
+        // Sanitize id array, ensure only positive integers:
+        for (var i = 0; i < delete_ids.length; i++) {
+            if (!parseInt(delete_ids[i]) || parseInt(delete_ids[i]) < 0) {
+                res.status(400);
+                res.json({msg: "Delete array ids must be integers greater than or equal to 0."});
+                return;
+            }
+        }
+
+        // Verify temp_auth_token against email_id using prepared SQL statement
+        db.all(`SELECT Notes.id, Notes.content FROM Notes, Users WHERE Notes.user_id = Users.id AND Users.email = ? and Users.temp_auth_token = ?`, [email, temp_auth_token], (err, result) => {
+            if (err || result === undefined) {
+              console.error(err);
+              res.status(500);
+              res.json({msg: "Invalid email or temp_auth_token."});
+              return;
+            }
+
+            // temp_auth_token valid. delete notes.
+            for (var i = 0; i < delete_ids.length; i++) {
+                db.run('DELETE FROM Notes WHERE user_id = (SELECT id from Users where email = ?) AND Notes.id = ?', [email, delete_ids[i]], (err) => {
+                    if (err) {
+                        console.error(err);
+                        res.status(500);
+                        res.json({msg: "Unable to delete notes. Try again later."});
+                        return;
+                    }
+                });
+            }
+
+            // Successfully deleted notes.
+            console.log("Deleted notes: ", email, delete_ids);
+            res.status(200);
+            res.json({msg: "Deleted notes."});
+            return;
+
+
+            /*db.run('DELETE FROM Notes WHERE user_id = (SELECT id from Users where email = ?) AND Notes.id in (?)', [email, "1,2"], (err) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500);
+                    res.json({msg: "Unable to delete notes. Try again later."});
+                    return;
+                } else {
+                    // Successfully deleted notes.
+                    console.log("Deleted notes: ", email, delete_ids);
+                    res.status(200);
+                    res.json({msg: "Deleted notes."});
+                    return;
+                }
+
+
+            });*/
+
+        });
+
+
+
+    });
+
+
 }
 
 
