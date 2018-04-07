@@ -11,16 +11,21 @@
 #include <cstdint>
 #include <algorithm>
 #include <node.h>
-using namespace std;
+#include "node_modules/nan/nan.h"
 
-using v8::Exception;
-using v8::FunctionCallbackInfo;
-using v8::Isolate;
-using v8::Local;
-using v8::Number;
-using v8::Object;
-using v8::String;
-using v8::Value;
+//// STL ///////////////
+using std::cin;       //
+using std::cout;      //
+using std::string;    //
+using std::find;      //
+////////////////////////
+
+//// V8 ////////////////
+using v8::Object;     //
+using v8::Local;      //
+using v8::Value;      //
+using v8::String;     //
+////////////////////////
 
 // -- Macros ---------------------------------------------------------------- //
 #define MAGIC        6U    // Magic number for the padding section
@@ -112,15 +117,26 @@ string fsl (string txt, string key) {
     return ctxt;
 }
 // -- NodeJS ---------------------------------------------------------------- //
-void bridge (const FunctionCallbackInfo<Value>& args) {
-	Isolate * isolate = args.GetIsolate();
-	string txt ((char*) *(args[0]->ToString()));
-	string key ((char*) *(args[0]->ToString()));
-	string res = fsl(txt, key);
-	Local<String> ret = v8::String::NewFromUtf8(isolate, res.c_str());
-	args.GetReturnValue().Set(ret);
+void cipher (const v8::FunctionCallbackInfo<Value>& args) {
+	/* plain/cipher text and key */
+	string txt = "";
+	string key = *String::Utf8Value(args[1]->ToString());
+	/* retrieve buffer */
+	v8::Local<Object> buffer     = args[0]->ToObject();
+	char*             data       = node::Buffer::Data(buffer);
+	size_t            size       = node::Buffer::Length(buffer);
+	/* copy buffer data to c++ string */
+	for (size_t i=0; i<size; i++)
+		txt+=data[i];
+
+	/* perform cipher */
+	string res = dap(fsl(txt, key));
+
+	/* create a new buffer */
+	Nan::MaybeLocal<v8::Object> result = Nan::CopyBuffer(&res[0], res.size());
+	args.GetReturnValue().Set(result.ToLocalChecked());
 }
 void init(Local<Object> exports) {
-	NODE_SET_METHOD(exports, "cipher", bridge);
+	NODE_SET_METHOD(exports, "cipher", cipher);
 }
 NODE_MODULE(NODE_GYP_MODULE_NAME, init)
