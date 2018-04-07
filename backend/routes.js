@@ -16,12 +16,15 @@ let db = new sqlite3.Database('./database.db', (err) => {
 
 
 function encrypt(data, key){
+  console.log(data);
   var txt = Buffer.from(data,'ascii');
-  return crypto.cipher(txt, key).toString('ascii');
+  return crypto.cipher(txt, key).toString('hex');
 }
 
 function decrypt(data, key){
-  return encrypt(data, key);
+  console.log(data);
+  var ctxt = Buffer.from(data,'hex');
+  return crypto.cipher(ctxt, key).toString('ascii');
 }
 
 
