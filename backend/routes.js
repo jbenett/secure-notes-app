@@ -209,7 +209,7 @@ function register_routes(app) {
     app.get('/notes', (req, res) => {
         let email = req.query.email;
         let temp_auth_token = req.query.temp_auth_token;
-        let password = req.query.temp_auth_token;
+        let password = req.query.password;
 
         if (email === undefined || temp_auth_token === undefined || password == undefined) {
             res.status(400);
@@ -242,8 +242,10 @@ function register_routes(app) {
             * ]
             *
             */
+
             result_array = [];
             for (row in result) {
+                console.log("Decrypting content with key", result[row]["content"], password);
                 result_array.push({
                     id: result[row]["id"],
                     content: decrypt(result[row]["content"], password) // Decrypt note with key
