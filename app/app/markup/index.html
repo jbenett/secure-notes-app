@@ -53,7 +53,7 @@
 
                 <div id="step2" style="display:none;">
                     <img src="" id="qrcode-image" />
-                    <h3>Please scan the QR code above into your 2FA app and enter the token generated below</h3>
+                    <h3 id="registered">Please enter the 2FA token generated from your device below.</h3>
                     <input class="input" id="token" type="text" name="token" placeholder="2FA token">
                     <div class="button-wrapper">
                         <button id="login-button2">
@@ -87,11 +87,13 @@
 
         $.post("http://localhost:3000/login_step1", {email: email, password: password})
         .done(function(data) {
-            console.log(data);
             $('#step1').hide();
             $('#step2').show();
-            $('.login-wrapper').css('height', '500px');
-            $('#qrcode-image').attr('src', data['qr']);
+            if ("qr" in data) {
+                $('.login-wrapper').css('height', '500px');
+                $('#qrcode-image').attr('src', data['qr']);
+                $('#registered').text('Please scan the QR code above into your 2FA app and enter the token generated below');
+            }
         })
         .fail(function() {
             alert("Error logging in.");

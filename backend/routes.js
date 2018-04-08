@@ -128,12 +128,31 @@ function register_routes(app) {
           // Otherwise, user is valid, move onto next factor of authentication
             let otpauth_url = "otpauth://totp/EncryptedNotesApp?secret=" + result["secret_key_2fa"];
 
+            // If the user has not registered our 2FA with their device, show QR image
+            if (result["registered_2fa"] === 0) {
+                QRCode.toDataURL(otpauth_url, function(err, data_url) {
+                  console.log("Generated QR-code and sent to user for step 2 of multifactor authentication");
 
-            QRCode.toDataURL(otpauth_url, function(err, data_url) {
-              console.log("Generated QR-code and sent to user for step 2 of multifactor authentication");
-              res.json({msg: "Successfully authetnicated step 1 (username + password). Moving onto second factor of autth.", qr: data_url});
-              return;
-            });
+                  // Set registered = true in DB for user
+                  db.run("UPDATE Users SET registered_2fa = 1 WHERE email = ?", [email], (err) => {
+                      if (err) {
+                          res.status(500);
+                          console.log(err);
+                          res.json({msg: "error logging in."});
+                          return ;
+                      }
+
+                      res.status(200);
+                      res.json({msg: "Successfully authenticated step 1 (username + password). Moving onto second factor of auth.", qr: data_url});
+                      return;
+                  });
+                });
+            } else {
+                // Don't send QR code, user already registered. This prevents multiple users registering with same 2FA scheme.
+                res.status(200);
+                res.json({msg: "Successfully authetnicated step 1 (username + password). Moving onto second factor of autth."});
+                return;
+            }
 
         });
     });
