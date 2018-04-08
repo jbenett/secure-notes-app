@@ -108,7 +108,7 @@
             alert("Successful login!");
             window.location.href = "notes.html";
             localStorage.setItem("email", email);
-            localStorage.setItem("temp_auth_token", "test_token");
+            localStorage.setItem("temp_auth_token", data["temp_auth_token"]);
             console.log("Redirected user");
         })
         .fail(function(e) {

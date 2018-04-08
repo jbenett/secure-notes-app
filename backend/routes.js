@@ -140,6 +140,7 @@ function register_routes(app) {
         });
     });
 
+
     /*
     * This endpoint is called for the 2FA process when the user
     * wants to verify their passcode
@@ -167,11 +168,28 @@ function register_routes(app) {
                                            token: token });
 
             if (verified) {
-                res.status(200);
-                res.json({msg: "Second setp of auth successful. Proceeding to note page"});
-                // TODO: Generate and return a temp_auth_token that can be used to make subsequent requests to get notes
-                // Redirect user to their notes page!
-                return;
+                require('crypto').randomBytes(48, function(err, buffer) {
+                  console.error(err);
+                  let token = buffer.toString('hex');
+
+                  // Update user's temp auth token in DB
+                  db.run("UPDATE Users SET temp_auth_token = ? WHERE email = ?", [token, email], (err) => {
+                      if (err) {
+                          console.error(err);
+                          res.status(500);
+                          res.json({msg: "Login error. Please try again later."});
+                          return;
+                      }
+
+                      // Successfully updated temp_auth_token
+                      res.status(200);
+                      res.json({msg: "Second step of auth successful. Proceeding to note page", temp_auth_token: token});
+                      return;
+                  });
+
+
+
+                });
             } else {
                 res.status(500);
                 res.json({msg: "Invalid token."});

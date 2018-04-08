@@ -13,6 +13,7 @@ function displayHTML() {
 	$('#notes-section')[0].innerHTML = "";
 	$.get("http://localhost:3000/notes", {email: email, temp_auth_token: temp_auth_token})
 	.done(function(result) {
+		console.log("Updating notes", result);
 		let maxLength = 200;
 		for (let i = 0; i < result["data"].length; i++) {
 			if(result["data"][i]["content"].length < maxLength) {
