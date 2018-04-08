@@ -2,6 +2,7 @@
 //import $ from 'jquery';
 let $ = require('jquery');
 let email = localStorage.getItem("email");
+let password = localStorage.getItem("password");
 let temp_auth_token = localStorage.getItem("temp_auth_token");
 
 
@@ -11,9 +12,8 @@ let temp_auth_token = localStorage.getItem("temp_auth_token");
 */
 function displayHTML() {
 	$('#notes-section')[0].innerHTML = "";
-	$.get("http://localhost:3000/notes", {email: email, temp_auth_token: temp_auth_token})
+	$.get("http://localhost:3000/notes", {email: email, temp_auth_token: temp_auth_token, password: password })
 	.done(function(result) {
-		console.log("Updating notes", result);
 		let maxLength = 200;
 		for (let i = 0; i < result["data"].length; i++) {
 			if(result["data"][i]["content"].length < maxLength) {

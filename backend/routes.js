@@ -4,8 +4,6 @@ var QRCode = require('qrcode');
 // Nodejs encryption with CTR
 const crypto = require('./verysecure');
 
-/* temporary: find better solution (probably localStorage or maybe something better?) */
-var two_factor_temp_secret = 0;
 
 let db = new sqlite3.Database('./database.db', (err) => {
   if (err) {
@@ -211,8 +209,9 @@ function register_routes(app) {
     app.get('/notes', (req, res) => {
         let email = req.query.email;
         let temp_auth_token = req.query.temp_auth_token;
+        let password = req.query.temp_auth_token;
 
-        if (email === undefined || temp_auth_token === undefined) {
+        if (email === undefined || temp_auth_token === undefined || password == undefined) {
             res.status(400);
             res.json({msg: "Bad request. Email and temp_auth_token must be set."});
             return;
@@ -247,7 +246,7 @@ function register_routes(app) {
             for (row in result) {
                 result_array.push({
                     id: result[row]["id"],
-                    content: result[row]["content"]
+                    content: decrypt(result[row]["content"], password) // Decrypt note with key
                 });
             }
 
@@ -269,8 +268,9 @@ function register_routes(app) {
         let email = req.body.email;
         let temp_auth_token = req.body.temp_auth_token;
         let content = req.body.content;
+        let password = req.body.password;
 
-        if (email === undefined || temp_auth_token === undefined || content == undefined) {
+        if (email === undefined || temp_auth_token === undefined || content == undefined || password == undefined) {
             res.status(400);
             res.json({msg: "Bad request. Email and temp_auth_token must be set."});
             return;
@@ -285,7 +285,9 @@ function register_routes(app) {
               return;
             }
 
-            db.run('INSERT INTO Notes (user_id, content) values((SELECT id from Users where email = ?), ?)', [email, content], (err) => {
+            let encrypted_note = encrypt(content, password);
+            console.log("Encrypted ? with ?", content, password);
+            db.run('INSERT INTO Notes (user_id, content) values((SELECT id from Users where email = ?), ?)', [email, encrypted_note], (err) => {
                 if (err) {
                     console.error("Could not insert note", err);
                     res.status(500);
