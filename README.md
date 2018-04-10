@@ -59,11 +59,12 @@ const crypto = require('./verysecure');
 
 function encrypt(data, key){
   var txt = Buffer.from(data,'ascii');
-  return crypto.cipher(txt, key).toString('hex');
+  return crypto.encrypt(txt, key).toString('hex');
 }
+
 function decrypt(data, key){
   var ctxt = Buffer.from(data,'hex');
-  return crypto.cipher(ctxt, key).toString('ascii');
+  return crypto.decrypt(ctxt, key).toString('ascii');
 }
 ```
 
