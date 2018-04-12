@@ -1,3 +1,9 @@
+/* notes.css
+
+Styling for the notes page.
+*/
+
+/* General styling */
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -25,6 +31,20 @@ span img {
 	margin-left: 12em;
 }
 
+h1 {
+	text-align: center;
+}
+
+h4 {
+	padding: 1em 0 0 0;
+	margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Specific styling for notes */
 .note {
 	width: 12em;
 	height: 10em;
@@ -105,17 +125,4 @@ input {
   padding: 1.5em 1.5em;
   cursor: pointer;
 
-}
-
-h1 {
-	text-align: center;
-}
-
-h4 {
-	padding: 1em 0 0 0;
-	margin: 0;
-}
-
-a {
-  text-decoration: none;
 }

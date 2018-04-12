@@ -1,3 +1,7 @@
+require('../renderer.js');
+let $ = require('jquery');
+
+
 function testPassword(p) {
     // return true if the password contains:
     // at least one digit

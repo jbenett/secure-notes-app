@@ -1,5 +1,10 @@
-// notes.js
-//import $ from 'jquery';
+/**
+* notes.js
+*
+* Javascript file that gives functionality to 
+* populating notes on the notes page and deleting them.
+*/
+require('../renderer.js');
 let $ = require('jquery');
 let email = localStorage.getItem("email");
 let password = localStorage.getItem("password");
@@ -7,6 +12,7 @@ let temp_auth_token = localStorage.getItem("temp_auth_token");
 
 
 /**
+* Page population functionality
 * Function iterates through the array containing the content of
 * the notes and displays them on the page.
 */
@@ -32,21 +38,13 @@ function displayHTML() {
 
 displayHTML();
 
-
-// let maxLength = 200;
-// let temp = 0;
-// for (let i = 0; i < dummyData.length; i++) {
-// 	if(dummyData[i].length < maxLength) {
-// 		$('#notes-section')[0].innerHTML += "<div class=\"note\">\n<input class=\"check\" value=\"" + temp +"\" type=\"checkbox\">\n" + dummyData[i] + "\n</div>";
-// 	} else {
-// 		$('#notes-section')[0].innerHTML += "<div class=\"note\">\n<input class=\"check\" value=\"" + temp +"\" type=\"checkbox\">\n" + dummyData[i].substring(0, maxLength) + "...\n</div>";
-// 	}
-// 	temp++;
-// }
-
-
 /**
 * Functionality for delete
+* The first time a user hits the minus button,
+* checkboxes will appear: one for each note.
+* When the user hits the minus button again,
+* all notes that were checked are deleted and are
+* cleared from the screen and deleted from the database.
 */
 let toggle = true;
 $('#del-btn').click(function() {
