@@ -4,7 +4,6 @@
 * Javascript file that gives functionality to 
 * populating notes on the notes page and deleting them.
 */
-require('../renderer.js');
 let $ = require('jquery');
 let email = localStorage.getItem("email");
 let password = localStorage.getItem("password");

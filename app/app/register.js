@@ -1,4 +1,3 @@
-require('../renderer.js');
 let $ = require('jquery');
 
 
