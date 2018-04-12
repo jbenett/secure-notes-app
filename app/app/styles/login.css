@@ -76,6 +76,10 @@ input {
   cursor: pointer;
 }
 
+#step2 {
+  display: none;
+}
+
 button:hover {
 	box-shadow: 0 0.3em #E6B098;
 }
