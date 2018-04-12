@@ -1,8 +1,21 @@
+/**
+* index.js
+*
+* Javascript file that gives functionality to 
+* user login.
+*/
 let $ = require('jquery');
 
 var email;
 var password;
 
+/**
+* Login functionality for step 1 of 2FA validation.
+* Once user inputs their username and password and they are
+* validated, the user is prompted to complete 2FA verification
+* with a QR code and/or textbox depending on whether it is 
+* their first time logging in or not.
+*/
 $('#login-button').click(function(e) {
     e.preventDefault();
     email = $('#email').val();
@@ -24,6 +37,13 @@ $('#login-button').click(function(e) {
 
 });
 
+/**
+* Login functionality for step 2 of 2FA validation.
+* Once the user inputs a valid code from the Google Authenticator
+* app, they are logged in and are taken to notes.html.
+* If the user does not enter a valid code, an error message pops
+* up alerting them of the failure.
+*/
 $('#login-button2').click(function(e) {
     e.preventDefault();
     var token = $('#token').val();

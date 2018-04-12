@@ -1,9 +1,23 @@
+/**
+* editor.js
+*
+* Javascript file that gives functionality to 
+* Creating and editing a note
+*/
+
 let $ = require('jquery');
 
 let email = localStorage.getItem("email");
 let password = localStorage.getItem("password");
 let temp_auth_token = localStorage.getItem("temp_auth_token");
 
+/**
+* Save functionality
+* When the save button is clicked, the content typed in
+* the textbox will be saved as a note to the database.
+* If the note already exists, it will be updated.
+* If a note doesn't already exist, a new note will be created.
+*/
 $('#save-btn').click(function(e) {
     e.preventDefault();
     let content = $('#note-content').val();
