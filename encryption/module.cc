@@ -130,6 +130,7 @@ string rnd (string blk, string key) {
 string fsl_master (string txt, string key) {
     /*
      * ptxt  padded plain text
+     * pkey  key stored on heap
      * blks  number of blocks
      * ctxt  the resulting ciphertext to return
      */
@@ -148,6 +149,7 @@ string fsl_master (string txt, string key) {
     cout << "Dividing work:"       << "\n"
          << "\tNumBlocks=" << blks << endl;
     #endif
+
     u32 chunks  = max(blks/Threads, (u64) 1);
     u32 current = 0;
     u32 i = 0;
@@ -166,7 +168,7 @@ string fsl_master (string txt, string key) {
             (tasks+i)->bc = chunks;
             current+=chunks;
         }
-        /* assign txt pointers */
+        /* assign pointers to text data */
         (tasks+i)->txt = ptxt;
         (tasks+i)->key = pkey;
         /* create thread */
